@@ -5,14 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/09/27 16:20:15 by hucherea         ###   ########.fr       */
+/*   Created: 2024/09/28 14:12:23 by hucherea          #+#    #+#             */
+/*   Updated: 2024/09/28 14:12:28 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av)
-{
-	
-}

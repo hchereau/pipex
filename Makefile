@@ -10,7 +10,8 @@ LIBFT := $(PATH_LIBFT)libft.a
 
 PATH_SRCS := srcs/
 
-SRCS += main.c
+# SRCS += main.c
+SRCS += test.c
 
 vpath %.c $(PATH_SRCS)
 
@@ -23,8 +24,11 @@ OBJS := $(patsubst %.c, $(PATH_OBJS)%.o, $(SRCS))
 ### HEADERS ######################################################################
 
 PATH_INCLUDES := includes/
+PATH_INCLUDES_LIBFT := $(PATH_LIBFT)includes/
+INCLUDES += -I $(PATH_INCLUDES)
+INCLUDES += -I $(PATH_INCLUDES_LIBFT)
 
-HEADERS += (PATH_INCLUDES)pipex.h
+HEADERS += $(PATH_INCLUDES)pipex.h
 
 ### COMPILATION #####################################################################
 
@@ -51,7 +55,12 @@ $(NAME): $(LIBFT) $(OBJS)
 
 $(OBJS): $(PATH_OBJS)%.o: %.c $(HEADERS)
 	@mkdir -p $(PATH_OBJS)
-	@$(CC) $(CFLAGS) -Sc $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+
+$(LIBFT):
+	@echo "$(BLUE)Compiling $(LIBFT) ...$(WHITE)"
+	@$(MAKE) -sC $(PATH_LIBFT)
+	@echo "$(GREEN)$(LIBFT) Compiled ! $(WHITE)"
 
 clean:
 	@echo "$(BLUE)Cleaning $(NAME) ...$(WHITE)"
