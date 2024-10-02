@@ -8,10 +8,22 @@ LIBFT := $(PATH_LIBFT)libft.a
 
 ### SRCS ######################################################################
 
-PATH_SRCS := srcs/
+PATH_SRCS += srcs/
 
 # SRCS += main.c
 SRCS += test.c
+
+# srcs/parsing/
+
+PATH_SRCS += srcs/parsing/
+
+SRCS += get_files_and_commands.c
+
+# srcs/utils/
+
+PATH_SRCS += srcs/utils/
+
+SRCS += free_data.c
 
 vpath %.c $(PATH_SRCS)
 
@@ -25,10 +37,9 @@ OBJS := $(patsubst %.c, $(PATH_OBJS)%.o, $(SRCS))
 
 PATH_INCLUDES := includes/
 PATH_INCLUDES_LIBFT := $(PATH_LIBFT)includes/
-INCLUDES += -I $(PATH_INCLUDES)
-INCLUDES += -I $(PATH_INCLUDES_LIBFT)
 
-HEADERS += $(PATH_INCLUDES)pipex.h
+HEADERS += $(PATH_INCLUDES)/pipex.h
+HEADERS += $(PATH_INCLUDES)/parsing.h
 
 ### COMPILATION #####################################################################
 
@@ -37,6 +48,15 @@ CC := cc
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
+CFLAGS += -g3
+
+ifeq ($(debug), true)
+	CFLAGS += -g3
+endif
+
+ifeq ($(sanitize), true)
+	CFLAGS += -fsanitize=address,undefined -g3
+endif
 
 ### COLORS ######################################################################
 
@@ -50,12 +70,12 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(BLUE)Compiling $(NAME)...$(WHITE)"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(INCLUDES)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) -I $(PATH_INCLUDES) -I $(PATH_INCLUDES_LIBFT)
 	@echo "$(GREEN)$(NAME) Compiled !$(WHITE)"
 
 $(OBJS): $(PATH_OBJS)%.o: %.c $(HEADERS)
 	@mkdir -p $(PATH_OBJS)
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INCLUDES) -I $(PATH_INCLUDES_LIBFT)
 
 $(LIBFT):
 	@echo "$(BLUE)Compiling $(LIBFT) ...$(WHITE)"

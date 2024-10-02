@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 15:42:02 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/02 14:00:49 by hucherea         ###   ########.fr       */
+/*   Created: 2024/10/02 13:12:16 by hucherea          #+#    #+#             */
+/*   Updated: 2024/10/02 15:07:58 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PARSING_H
+# define PARSING_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <stdlib.h>
 # include "libft.h"
-# include "parsing.h"
+# include "pipex.h"
 
-typedef enum e_state_fonction
-{
-	FAILURE = -1,
-	SUCCESS
-}	t_state_fonction;
+# define ENV_PATH "PATH="
+# define SIZE_ENV_PATH 5
 
-typedef struct s_input_data
-{
-	char	**cmd;
-	char	*infile;
-	char	*outfile;
-}	t_input_data;
+typedef struct s_input_data		t_input_data;
+typedef enum e_state_fonction	t_state_fonction;
 
-void	free_data(t_input_data *data);
+t_input_data	*get_files_and_commands(char **strs, char **env);
 
 #endif
