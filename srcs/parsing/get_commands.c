@@ -6,29 +6,30 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:59:41 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/02 15:41:44 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:55:08 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static char	**get_path(char *env)
+static char	**get_paths(char **env)
 {
 	int		i;
-	char	**path;
+	char	**paths;
 
 	i = 0;
 	while (env[i] != NULL)
 	{
 		if (ft_strncmp(env[i], ENV_PATH, SIZE_ENV_PATH) == 0)
 		{
-			path = ft_split(env[i] + SIZE_ENV_PATH, ':');
-			if (path == NULL)
+			paths = ft_split(env[i] + SIZE_ENV_PATH, ':');
+			if (paths == NULL)
 			{
-				ft_putendl_fd("Error: malloc failed in get_path", STDERR_FILENO);
+				ft_putendl_fd("Error: malloc failed in get_path",
+					STDERR_FILENO);
 				return (NULL);
 			}
-			return (path);
+			return (paths);
 		}
 		++i;
 	}
@@ -36,15 +37,40 @@ static char	**get_path(char *env)
 	return (NULL);
 }
 
+static char	*make_relative_path(char *cmd, char *path)
+{
+	char		*relative_path;
+	char		*cmd_with_path;
+
+	relative_path = ft_strjoin(path, "/");
+	if (relative_path == NULL)
+		return (NULL);
+	cmd_with_path = ft_strjoin(relative_path, cmd);
+	if (cmd_with_path == NULL)
+	{
+		free(relative_path);
+		return (NULL);
+	}
+	free(relative_path);
+	return (cmd_with_path);
+}
+
 static char	*get_path_from_env(char **paths, char *str)
 {
+	char	*cmd;
 	size_t	i;
 
 	i = 0;
 	while (paths[i] != NULL)
 	{
-		if (access(paths[i], F_OK) == 0 || access(paths[i], X_OK) == 0)
-			return (ft_strjoin(paths[i], str));
+		cmd = make_relative_path(str, paths[i]);
+		if (cmd == NULL)
+		{
+			return (NULL);
+		}
+		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+			return (cmd);
+		free(cmd);
 		++i;
 	}
 	return (str);
@@ -54,25 +80,31 @@ static char	*get_relative_path(char *str, char **env)
 {
 	char	**paths;
 	char	*cmd;
-	size_t	i;
 
-	paths = get_path(env);
+	paths = get_paths(env);
 	if (paths == NULL)
 		return (NULL);
-	if (access(str, F_OK) == 0 || access(str, X_OK) == 0)
+	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
 		cmd = ft_strdup(str);
 	else
 	{
 		cmd = get_path_from_env(paths, str);
+		if (cmd == NULL)
+		{
+			ft_putendl_fd("Error: malloc failed in get_relative_path",
+				STDERR_FILENO);
+			free_strs(paths);
+			return (NULL);
+		}
 	}
 	free_strs(paths);
 	return (cmd);
 }
 
-static char	**get_commands(char **strs, char **env)
+char	**get_commands(char **strs, char **env)
 {
 	char	**cmds;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	cmds = malloc(sizeof(char *) * (ft_strslen(strs)));

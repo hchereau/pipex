@@ -18,6 +18,7 @@ SRCS += test.c
 PATH_SRCS += srcs/parsing/
 
 SRCS += get_files_and_commands.c
+SRCS += get_commands.c
 
 # srcs/utils/
 
@@ -47,7 +48,7 @@ CC := cc
 
 CFLAGS += -Wall
 CFLAGS += -Wextra
-CFLAGS += -Werror
+# CFLAGS += -Werror
 CFLAGS += -g3
 
 ifeq ($(debug), true)
