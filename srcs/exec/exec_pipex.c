@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_malloc_str.c                                   :+:      :+:    :+:   */
+/*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 10:25:32 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 13:18:20 by hucherea         ###   ########.fr       */
+/*   Created: 2024/10/03 11:06:58 by hucherea          #+#    #+#             */
+/*   Updated: 2024/10/03 11:40:09 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "exec.h"
 
-char	*get_malloc_str(char *str)
+void	exec_pipex(t_input_data *data)
 {
-	char	*new_str;
+	int	pid;
+	exec_commands(data->infile, data->cmds, &pid);
+	exec_last_command(data, &pid);
+	wait_process(pid);
 
-	if (str == NULL)
-		return (NULL);
-	new_str = ft_strdup(str);
-	if (new_str == NULL)
-	{
-		ft_putendl_fd("Error: malloc failed in get_malloc_str", STDERR_FILENO);
-		return (NULL);
-	}
-	return (new_str);
 }

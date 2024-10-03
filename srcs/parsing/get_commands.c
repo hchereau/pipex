@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:59:41 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 10:35:53 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:20:22 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static char	*get_path_from_env(char **paths, char *str)
 
 	i = 0;
 	malloc_str = get_malloc_str(str);
-	while (paths[i] != NULL)
+	free(str);
+	while (paths[i] != NULL && malloc_str != NULL)
 	{
 		cmd = make_relative_path(str, paths[i]);
 		if (cmd == NULL)
@@ -82,19 +83,23 @@ static char	*get_path_from_env(char **paths, char *str)
 	return (malloc_str);
 }
 
-static char	*get_relative_path(char *str, char **env)
+static char	**get_relative_path(char *str, char **env)
 {
 	char	**paths;
-	char	*cmd;
+	char	**cmd;
 
+	cmd = ft_split(str, ' ');
+	if (cmd == NULL)
+	{
+		ft_putendl_fd("Error: malloc failed in get_relative_path", STDERR_FILENO);
+		return (NULL);
+	}
 	paths = get_paths(env);
 	if (paths == NULL)
 		return (NULL);
-	if (access(str, F_OK) == 0 && access(str, X_OK) == 0)
-		cmd = ft_strdup(str);
-	else
+	if (access(str, F_OK) != 0 && access(str, X_OK) != 0)
 	{
-		cmd = get_path_from_env(paths, str);
+		cmd[0] = get_path_from_env(paths, cmd[0]);
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error: malloc failed in get_relative_path",
@@ -107,13 +112,13 @@ static char	*get_relative_path(char *str, char **env)
 	return (cmd);
 }
 
-char	**get_commands(char **strs, char **env)
+char	***get_commands(char **strs, char **env)
 {
-	char	**cmds;
+	char	***cmds;
 	size_t	i;
 
 	i = 0;
-	cmds = malloc(sizeof(char *) * (ft_strslen(strs)));
+	cmds = malloc(sizeof(char **) * (ft_strslen(strs) + 1));
 	if (cmds == NULL)
 	{
 		ft_putendl_fd("Error: malloc failed in get_commands", STDERR_FILENO);
@@ -126,7 +131,7 @@ char	**get_commands(char **strs, char **env)
 		{
 			ft_putendl_fd("Error: malloc failed in get_commands",
 				STDERR_FILENO);
-			free_strs(cmds);
+			free_cmds(cmds);
 			return (NULL);
 		}
 		++i;

@@ -21,11 +21,18 @@ SRCS += get_files_and_commands.c
 SRCS += get_commands.c
 SRCS += get_malloc_str.c
 
+# srcs/exec/
+
+PATH_SRCS += srcs/exec/
+
+# SRCS += exec_pipex.c
+
 # srcs/utils/
 
 PATH_SRCS += srcs/utils/
 
 SRCS += free_data.c
+SRCS += free_cmds.c
 
 vpath %.c $(PATH_SRCS)
 
@@ -42,6 +49,7 @@ PATH_INCLUDES_LIBFT := $(PATH_LIBFT)includes/
 
 HEADERS += $(PATH_INCLUDES)/pipex.h
 HEADERS += $(PATH_INCLUDES)/parsing.h
+HEADERS += $(PATH_INCLUDES)/exec.h
 
 ### COMPILATION #####################################################################
 

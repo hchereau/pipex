@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 10:41:12 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:15:34 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,18 @@
 // }
 
 
+static void	print_strs(char **strs)
+{
+	int i = 0;
+
+	while (strs[i] != NULL)
+	{
+		printf("%d: ", i);
+		printf("%s\n", strs[i]);
+		i++;
+	}
+}
+
 void	print_data(t_input_data *data)
 {
 	int i = 0;
@@ -114,7 +126,8 @@ void	print_data(t_input_data *data)
 	printf("outfile: %s\n", data->outfile);
 	while (data->cmd[i] != NULL)
 	{
-		printf("cmd[%d]: %s\n", i, data->cmd[i]);
+		printf("cmd[%d]:\n", i);
+		print_strs(data->cmd[i]);
 		i++;
 	}
 }
@@ -141,17 +154,25 @@ int	main(int ac, char **av, char **env)
 
 	char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
 	char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
-	char *av3[] = {"pipex", "test1", "", "ls", "cmd1", "echo3", NULL};
+	char *av3[] = {"pipex", "test1", "", "ls -l", "cmd1", "echo3", NULL};
 
 	data = get_files_and_commands(av1 + 1, env);
 	data2 = get_files_and_commands(av2 + 1, env);
 	data3 = get_files_and_commands(av3 + 1, env);
 
-	test_valid_data(data, 1);
-	test_valid_data(data2, 2);
-	test_valid_data(data3, 3);
-
-	free_data(data);
-	free_data(data2);
-	free_data(data3);
+	if (data != NULL)
+	{
+		test_valid_data(data, 1);
+		free_data(data);
+	}
+	if (data2 != NULL)
+	{
+		test_valid_data(data2, 2);
+		free_data(data2);
+	}
+	if (data3 != NULL)
+	{
+		test_valid_data(data3, 3);
+		free_data(data3);
+	}
 }

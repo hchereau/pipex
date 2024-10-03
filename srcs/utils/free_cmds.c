@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_malloc_str.c                                   :+:      :+:    :+:   */
+/*   free_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 10:25:32 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 13:18:20 by hucherea         ###   ########.fr       */
+/*   Created: 2024/10/03 12:53:38 by hucherea          #+#    #+#             */
+/*   Updated: 2024/10/03 13:21:00 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_malloc_str(char *str)
+void	free_cmds(char ***cmds)
 {
-	char	*new_str;
+	int	i;
 
-	if (str == NULL)
-		return (NULL);
-	new_str = ft_strdup(str);
-	if (new_str == NULL)
+	i = 0;
+	while (cmds[i] != NULL)
 	{
-		ft_putendl_fd("Error: malloc failed in get_malloc_str", STDERR_FILENO);
-		return (NULL);
+		free_strs(cmds[i]);
+		++i;
 	}
-	return (new_str);
+	free(cmds);
 }

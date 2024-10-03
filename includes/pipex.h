@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:02 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/02 14:00:49 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:55:42 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "parsing.h"
+// # include "exec.h"
 
-typedef enum e_state_fonction
+typedef enum e_state_function
 {
 	FAILURE = -1,
 	SUCCESS
-}	t_state_fonction;
+}	t_state_function;
 
 typedef struct s_input_data
 {
-	char	**cmd;
+	char	***cmd;
 	char	*infile;
 	char	*outfile;
 }	t_input_data;
 
 void	free_data(t_input_data *data);
+void	free_cmds(char ***cmds);
 
 #endif
