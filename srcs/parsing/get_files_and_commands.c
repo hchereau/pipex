@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:04:57 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 11:44:13 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:03:35 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_input_data	*get_files_and_commands(char **strs, char **env)
 	}
 	if (get_files(&data->infile, &data->outfile, strs) == SUCCESS)
 	{
-		data->cmd = get_commands(strs + 1, env);
+		data->cmds = get_commands(strs + 1, env);
 	}
-	if (data->cmd == NULL)
+	if (data->cmds == NULL)
 	{
 		free_data(data);
 		return (NULL);

@@ -25,7 +25,9 @@ SRCS += get_malloc_str.c
 
 PATH_SRCS += srcs/exec/
 
-# SRCS += exec_pipex.c
+SRCS += exec_pipex.c
+SRCS += exec_commands.c
+SRCS += exec_last_command.c
 
 # srcs/utils/
 
@@ -57,7 +59,7 @@ CC := cc
 
 CFLAGS += -Wall
 CFLAGS += -Wextra
-# CFLAGS += -Werror
+CFLAGS += -Werror
 CFLAGS += -g3
 
 ifeq ($(debug), true)

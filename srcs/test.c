@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 13:15:34 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:23:28 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,17 +124,17 @@ void	print_data(t_input_data *data)
 
 	printf("infile: %s\n", data->infile);
 	printf("outfile: %s\n", data->outfile);
-	while (data->cmd[i] != NULL)
+	while (data->cmds[i] != NULL)
 	{
 		printf("cmd[%d]:\n", i);
-		print_strs(data->cmd[i]);
+		print_strs(data->cmds[i]);
 		i++;
 	}
 }
 
 static void	test_valid_data(t_input_data *data, int test)
 {
-	if (data->infile != NULL && data->outfile != NULL && data->cmd != NULL)
+	if (data->infile != NULL && data->outfile != NULL && data->cmds != NULL)
 	{
 		printf(GREEN "Test %d: SUCCESS\n" WHITE, test);
 		print_data(data);
@@ -154,7 +154,7 @@ int	main(int ac, char **av, char **env)
 
 	char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
 	char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
-	char *av3[] = {"pipex", "test1", "", "ls -l", "cmd1", "echo3", NULL};
+	char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep", "echo3", NULL};
 
 	data = get_files_and_commands(av1 + 1, env);
 	data2 = get_files_and_commands(av2 + 1, env);

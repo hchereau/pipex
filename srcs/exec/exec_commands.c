@@ -6,24 +6,36 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:40:11 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 13:23:24 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:21:20 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	child_process(char *infile, char **cmd, int *pipefd[2])
+static void	child_process(char **cmd, int (*pipefd)[2])
 {
-
+	dup2(*pipefd[1], STDOUT_FILENO);
+	close(*pipefd[0]);
+	close(*pipefd[1]);
+	execve(cmd[0], cmd, NULL);
+	perror("execve");
+	free_strs(cmd);
+	exit(EXIT_FAILURE);
 }
 
-static void	process(char *infile, char **cmd, int *pipefd[2], int *pid)
+static void	process(char **cmd, int (*pipefd)[2], int *pid)
 {
 	pipe(*pipefd);
 	*pid = fork();
-	if (*pid == 0)
+	if (*pid == -1)
 	{
-		child_process(infile, cmd, pipefd);
+		perror("fork");
+		free_strs(cmd);
+		exit(EXIT_FAILURE);
+	}
+	else if (*pid == 0)
+	{
+		child_process(cmd, pipefd);
 	}
 	else
 	{
@@ -33,16 +45,19 @@ static void	process(char *infile, char **cmd, int *pipefd[2], int *pid)
 	}
 }
 
-t_state_function	exec_commands(char *infile, char ***cmds, int *pid)
+void	exec_commands(char *infile, char ***cmds, int *pid)
 {
 	size_t	i;
 	int		pipefd[2];
+	int		fd;
 
 	i = 0;
-	dup2(infile, STDIN_FILENO);
+	fd = open(infile, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 	while (cmds[i + 1] != NULL)
 	{
-		process(infile, cmds[i], &pipefd, pid);
+		process(cmds[i], &pipefd, pid);
 		++i;
 	}
 }
