@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 13:12:16 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/02 16:11:43 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:27:56 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ typedef enum e_state_fonction	t_state_fonction;
 t_input_data	*get_files_and_commands(char **strs, char **env);
 char			**get_commands(char **strs, char **env);
 void			print_data(t_input_data *data);
+char			*get_malloc_str(char *str);
 
 #endif

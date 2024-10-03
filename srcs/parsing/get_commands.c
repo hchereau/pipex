@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:59:41 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/02 17:55:08 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:35:53 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ static char	*get_path_from_env(char **paths, char *str)
 {
 	char	*cmd;
 	size_t	i;
+	char	*malloc_str;
+
 
 	i = 0;
+	malloc_str = get_malloc_str(str);
 	while (paths[i] != NULL)
 	{
 		cmd = make_relative_path(str, paths[i]);
@@ -69,11 +72,14 @@ static char	*get_path_from_env(char **paths, char *str)
 			return (NULL);
 		}
 		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+		{
+			free(malloc_str);
 			return (cmd);
+		}
 		free(cmd);
 		++i;
 	}
-	return (str);
+	return (malloc_str);
 }
 
 static char	*get_relative_path(char *str, char **env)

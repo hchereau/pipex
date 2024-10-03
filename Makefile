@@ -19,6 +19,7 @@ PATH_SRCS += srcs/parsing/
 
 SRCS += get_files_and_commands.c
 SRCS += get_commands.c
+SRCS += get_malloc_str.c
 
 # srcs/utils/
 
