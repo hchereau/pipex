@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:36:26 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 12:58:43 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:19:00 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exec_last_command(char **cmd, char *outfile, int *pid)
 	if (*pid == -1)
 	{
 		perror("fork");
-		return ;
+		exit(EXIT_FAILURE);
 	}
 	else if (*pid == 0)
 	{
@@ -32,8 +32,11 @@ void	exec_last_command(char **cmd, char *outfile, int *pid)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
-		execve(cmd[0], cmd,NULL);
+		if (cmd[0] != NULL)
+			execve(cmd[0], cmd, NULL);
 		perror("execve");
-		free_strs(cmd);
+		// free_strs(cmd);
+		return ;
+		// exit(EXIT_FAILURE);
 	}
 }
