@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:59:41 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 13:20:22 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:15:47 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ static char	*get_path_from_env(char **paths, char *str)
 	size_t	i;
 	char	*malloc_str;
 
-
 	i = 0;
 	malloc_str = get_malloc_str(str);
-	free(str);
 	while (paths[i] != NULL && malloc_str != NULL)
 	{
 		cmd = make_relative_path(str, paths[i]);
@@ -75,11 +73,13 @@ static char	*get_path_from_env(char **paths, char *str)
 		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 		{
 			free(malloc_str);
+			free(str);
 			return (cmd);
 		}
 		free(cmd);
 		++i;
 	}
+	free(str);
 	return (malloc_str);
 }
 
@@ -91,7 +91,8 @@ static char	**get_relative_path(char *str, char **env)
 	cmd = ft_split(str, ' ');
 	if (cmd == NULL)
 	{
-		ft_putendl_fd("Error: malloc failed in get_relative_path", STDERR_FILENO);
+		ft_putendl_fd("Error: malloc failed in get_relative_path",
+			STDERR_FILENO);
 		return (NULL);
 	}
 	paths = get_paths(env);

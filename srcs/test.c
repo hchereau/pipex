@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 15:23:28 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:14:13 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	main(int ac, char **av, char **env)
 
 	char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
 	char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
-	char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep", "echo3", NULL};
+	char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep 3", "echo3", NULL};
 
 	data = get_files_and_commands(av1 + 1, env);
 	data2 = get_files_and_commands(av2 + 1, env);
