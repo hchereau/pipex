@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:40:11 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 15:19:06 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:23:37 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	child_process(char **cmd, int (*pipefd)[2])
 {
-	printf("yes\n");
 	dup2((*pipefd)[1], STDOUT_FILENO);
 	close((*pipefd)[0]);
 	close((*pipefd)[1]);
