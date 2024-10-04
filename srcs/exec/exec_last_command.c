@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:36:26 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 15:22:45 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:14:03 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	exec_last_command(char **cmd, char *outfile, int *pid)
 			execve(cmd[0], cmd, NULL);
 		ft_dprintf(STDERR_FILENO, "error\n", cmd[0]);
 		perror("execve");
-		// free_strs(cmd);
-		return ;
-		// exit(EXIT_FAILURE);
+		free_strs(cmd);
+		exit(EXIT_FAILURE);
 	}
 }

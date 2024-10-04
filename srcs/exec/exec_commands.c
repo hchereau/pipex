@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:40:11 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 15:23:37 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:13:46 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ static void	child_process(char **cmd, int (*pipefd)[2])
 	if (cmd[0] != NULL)
 		execve(cmd[0], cmd, NULL);
 	perror("execve");
-	// free_strs(cmd);
-	return ;
-	// exit(EXIT_FAILURE);
+	free_strs(cmd);
+	exit(EXIT_FAILURE);
 }
 
 static void	process(char **cmd, int (*pipefd)[2], int *pid)
