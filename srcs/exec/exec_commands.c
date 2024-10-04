@@ -6,13 +6,13 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:40:11 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 17:13:46 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:17:54 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	child_process(char **cmd, int (*pipefd)[2])
+static void	exec_command(char **cmd, int (*pipefd)[2])
 {
 	dup2((*pipefd)[1], STDOUT_FILENO);
 	close((*pipefd)[0]);
@@ -24,7 +24,7 @@ static void	child_process(char **cmd, int (*pipefd)[2])
 	exit(EXIT_FAILURE);
 }
 
-static void	process(char **cmd, int (*pipefd)[2], int *pid)
+static void	child_process(char **cmd, int (*pipefd)[2], int *pid)
 {
 	pipe(*pipefd);
 	*pid = fork();
@@ -36,7 +36,7 @@ static void	process(char **cmd, int (*pipefd)[2], int *pid)
 	}
 	else if (*pid == 0)
 	{
-		child_process(cmd, pipefd);
+		exec_command(cmd, pipefd);
 	}
 	else
 	{
@@ -63,7 +63,7 @@ void	exec_commands(char *infile, char ***cmds, int *pid)
 	close(fd);
 	while (cmds[i + 1] != NULL)
 	{
-		process(cmds[i], &pipefd, pid);
+		child_process(cmds[i], &pipefd, pid);
 		++i;
 	}
 }
