@@ -128,8 +128,8 @@ install_hooks:
 cppcheck: $(SRCS)
 	cppcheck $(CPPCHECK_OPTIONS) $^ -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES)
 
-clang_analyzer: $(SRCS)
-	clang $(CLANG_ANALYZE_OPTIONS) $^ -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES)
+clang_analyzer:
+	clang $(CLANG_ANALYZE_OPTIONS) **/*.c -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES); \
 
 norminette: $(SRCS) $(HEADERS)
 	norminette $^
