@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 14:12:23 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 12:49:35 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:34:50 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 
 	if (ac < 4)
 	{
-		ft_putendl_fd("Error: usage ./pipex file1 cmd1 cmd2 .... file2",
-			STDERR_FILENO);
+		ft_putendl_fd("Error: not enough arguments", STDERR_FILENO);
 		return (FAILURE);
 	}
-	data = get_files_and_commands(av, env);
-	if (data != NULL)
+	else
 	{
+		data = get_files_and_cmds_from_args(ac, av);
 		if (data->infile == NULL)
+		{
+			ft_putendl_fd("Error: invalid input file", STDERR_FILENO);
+			free_data(data);
 			return (FAILURE);
-		exec_pipex(data);
-		free_data(data);
+		}
+		exec_cmds_with_files(data, env);
 	}
 	return (SUCCESS);
 }

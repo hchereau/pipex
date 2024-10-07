@@ -10,24 +10,20 @@ LIBFT := $(PATH_LIBFT)libft.a
 
 PATH_SRCS += srcs/
 
-SRCS += main.c
-# SRCS += test.c
+# SRCS += main.c
+SRCS += test.c
 
 # srcs/parsing/
 
 PATH_SRCS += srcs/parsing/
 
-SRCS += get_files_and_commands.c
-SRCS += get_commands.c
-SRCS += get_malloc_str.c
+SRCS += get_files_and_cmds_from_strs.c
+SRCS += get_cmds.c
+SRCS += get_files.c
 
 # srcs/exec/
 
 PATH_SRCS += srcs/exec/
-
-SRCS += exec_pipex.c
-SRCS += exec_commands.c
-SRCS += exec_last_command.c
 
 # srcs/utils/
 

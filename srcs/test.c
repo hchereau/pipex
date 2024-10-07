@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/04 11:14:13 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:41:49 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ static void	print_strs(char **strs)
 
 void	print_data(t_input_data *data)
 {
-	int i = 0;
+	size_t i = 0;
 
 	printf("infile: %s\n", data->infile);
 	printf("outfile: %s\n", data->outfile);
-	while (data->cmds[i] != NULL)
+	while (data->cmds[i].cmd != NULL)
 	{
-		printf("cmd[%d]:\n", i);
-		print_strs(data->cmds[i]);
+		printf("cmd: \n");
+		print_strs(data->cmds[i].cmd);
 		i++;
 	}
 }
@@ -140,7 +140,15 @@ static void	test_valid_data(t_input_data *data, int test)
 		print_data(data);
 	}
 	else
+	{
 		printf(RED "Test %d: FAILURE\n" WHITE, test);
+		if (data->infile == NULL)
+			printf("infile is NULL\n");
+		if (data->outfile == NULL)
+			printf("outfile is NULL\n");
+		if (data->cmds == NULL)
+			printf("cmds is NULL\n");
+	}
 }
 
 
@@ -148,17 +156,18 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+	(void)env;
 	t_input_data	*data;
 	t_input_data	*data2;
 	t_input_data	*data3;
 
-	char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
-	char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
-	char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep 3", "echo3", NULL};
+	const char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
+	const char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
+	const char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep 3", "echo3", NULL};
 
-	data = get_files_and_commands(av1 + 1, env);
-	data2 = get_files_and_commands(av2 + 1, env);
-	data3 = get_files_and_commands(av3 + 1, env);
+	data = get_files_and_cmds_from_strs(ft_strslen(av1 + 1), (const char **)(av1 + 1));
+	data2 = get_files_and_cmds_from_strs(ft_strslen(av2 + 1), (const char **)(av2 + 1));
+	data3 = get_files_and_cmds_from_strs(ft_strslen(av3 + 1), (const char **)(av3 + 1));
 
 	if (data != NULL)
 	{

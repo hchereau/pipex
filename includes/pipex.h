@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:02 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/03 14:03:22 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:19:02 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,21 @@ typedef enum e_state_function
 	SUCCESS
 }	t_state_function;
 
+typedef struct s_cmd
+{
+	char	**cmd;
+	int		fd_in;
+	int		fd_out;
+}	t_cmd;
+
 typedef struct s_input_data
 {
-	char	***cmds;
+	t_cmd	*cmds;
 	char	*infile;
 	char	*outfile;
 }	t_input_data;
 
 void	free_data(t_input_data *data);
-void	free_cmds(char ***cmds);
+void	free_cmds(t_cmd *cmds);
 
 #endif
