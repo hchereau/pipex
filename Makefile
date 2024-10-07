@@ -122,6 +122,9 @@ fclean: clean
 
 re: fclean all
 
+install_hooks:
+	.scripts/install_hooks.sh
+
 cppcheck: $(SRCS)
 	cppcheck $(CPPCHECK_OPTIONS) $^ -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES)
 
