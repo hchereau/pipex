@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -39,6 +41,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Install cppcheck
         run: sudo apt-get install -y cppcheck build-essential
@@ -53,6 +57,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Install clang
         run: sudo apt-get install -y clang build-essential
@@ -67,6 +73,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Install build dependencies
         run: sudo apt-get install -y build-essential
