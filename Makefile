@@ -66,13 +66,31 @@ ifeq ($(sanitize), true)
 	CFLAGS += -fsanitize=address,undefined -g3
 endif
 
-### COLORS ######################################################################
+### COLORS #####################################################################
 
 GREEN := \033[0;32m
 BLUE := \033[0;34m
 WHITE := \033[0;37m
 
 ### RULES ######################################################################
+
+### LINT #######################################################################
+CLANG_ANALYZE_OPTIONS = --analyze \
+                        -Weverything \
+                        -Wno-unknown-warning-option \
+                        -Werror \
+                        -ferror-limit=0 \
+                        -Xanalyzer -analyzer-output=text \
+                        -Xanalyzer -analyzer-config \
+                        -Xanalyzer aggressive-binary-operation-simplification=true \
+                        -Xanalyzer -analyzer-config \
+                        -Xanalyzer unroll-loops=true
+
+CPPCHECK_OPTIONS =  --enable=all \
+					--inconclusive \
+					--error-exitcode=1 \
+					--suppress=missingIncludeSystem
+
 
 all: $(NAME)
 
@@ -104,4 +122,13 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+cppcheck: $(SRCS)
+	cppcheck $(CPPCHECK_OPTIONS) $^ -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES)
+
+clang_analyzer: $(SRCS)
+	clang $(CLANG_ANALYZE_OPTIONS) $^ -I $(PATH_INCLUDES_LIBFT) -I $(PATH_INCLUDES)
+
+norminette: $(SRCS) $(HEADERS)
+	norminette $^
+
+.PHONY: all clean fclean re cppcheck clang_analyzer norminette
