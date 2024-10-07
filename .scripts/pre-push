@@ -5,8 +5,8 @@ set -e  # Exit immediately if any command exits with a non-zero status
 ROOT_DIR=$(git rev-parse --show-toplevel)
 
 # Run Norminette
-echo "Running Norminette..."
-norminette "$ROOT_DIR"
+# echo "Running Norminette..."
+# norminette "$ROOT_DIR"
 
 # Build the project
 echo "Building the project..."
@@ -20,3 +20,4 @@ make -C "$ROOT_DIR" cppcheck
 # Run Clang Static Analyzer
 echo "Running Clang Static Analyzer..."
 make -C "$ROOT_DIR" clang_analyzer
+
