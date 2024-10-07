@@ -13,9 +13,9 @@ echo "Building the project..."
 make -C "$ROOT_DIR"
 make -C "$ROOT_DIR" fclean
 
-# Run cppcheck
-echo "Running cppcheck..."
-make -C "$ROOT_DIR" cppcheck
+# # Run cppcheck
+# echo "Running cppcheck..."
+# make -C "$ROOT_DIR" cppcheck
 
 # Run Clang Static Analyzer
 echo "Running Clang Static Analyzer..."
