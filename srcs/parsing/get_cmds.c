@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:28:25 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/07 15:05:10 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:17:35 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,30 @@ static void	init_cmds(t_cmd **cmds, size_t	strs_len)
 	*cmds = (t_cmd *)malloc(sizeof(t_cmd) * (strs_len));
 }
 
-static void	get_cmd(t_cmd **cmd, const char *str)
+static void	get_cmd(t_cmd *cmd, const char *str)
 {
-	(*cmd)->cmd = ft_split(str, ' ');
+	cmd->cmd = ft_split(str, ' ');
 }
 
-t_state_function	get_cmds(t_cmd	**cmds, const char **strs)
+t_cmd	*get_cmds(const char **strs, const int strs_len)
 {
+	t_cmd	*cmds;
 	size_t	i;
 
 	i = 0;
-	init_cmds(cmds, ft_strslen(strs));
+	init_cmds(&cmds, strs_len);
 	if (cmds == NULL)
-		return (SUCCESS);
+		return (NULL);
 	while (strs[i + 1] != NULL)
 	{
-		get_cmd(cmds, *strs);
-		if (cmds[i]->cmd == NULL)
-			return (FAILURE);
+		get_cmd(&cmds[i], strs[i]);
+		if (cmds[i].cmd == NULL)
+		{
+			free_cmds(cmds);
+			return (NULL);
+		}
 		++i;
 	}
-	return (SUCCESS);
+	cmds[i].cmd = NULL;
+	return (cmds);
 }

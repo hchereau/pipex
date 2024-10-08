@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/07 14:41:49 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:05:19 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ static void	print_strs(char **strs)
 
 	while (strs[i] != NULL)
 	{
-		printf("%d: ", i);
 		printf("%s\n", strs[i]);
 		i++;
 	}
@@ -124,9 +123,10 @@ void	print_data(t_input_data *data)
 
 	printf("infile: %s\n", data->infile);
 	printf("outfile: %s\n", data->outfile);
+	printf("cmd: \n");
 	while (data->cmds[i].cmd != NULL)
 	{
-		printf("cmd: \n");
+		printf("%zu:\n", i);
 		print_strs(data->cmds[i].cmd);
 		i++;
 	}

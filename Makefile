@@ -10,8 +10,8 @@ LIBFT := $(PATH_LIBFT)libft.a
 
 PATH_SRCS += srcs/
 
-# SRCS += main.c
-SRCS += test.c
+SRCS += main.c
+# SRCS += test.c
 
 # srcs/parsing/
 
