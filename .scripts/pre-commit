@@ -18,4 +18,4 @@ fi
 
 # Run Norminette
 echo "Running Norminette..."
-make -C "$ROOT_DIR" norminette
+make -C "$ROOT_DIR" norminette FILES="$FILES_TO_CHECK"
