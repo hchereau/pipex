@@ -34,21 +34,21 @@ jobs:
         run: |
           make norminette
 
-  # cppcheck:
-  #   name: Static Analysis - Cppcheck
-  #   runs-on: ubuntu-latest
+  cppcheck:
+    name: Static Analysis - Cppcheck
+    runs-on: ubuntu-latest
 
-    # steps:
-    #   - name: Checkout repository
-    #     uses: actions/checkout@v2
-    #     with:
-    #       submodules: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
 
-    #   - name: Install cppcheck
-    #     run: sudo apt-get install -y cppcheck build-essential
+      - name: Install cppcheck
+        run: sudo apt-get install -y cppcheck build-essential
 
-    #   - name: Run cppcheck
-    #     run: make cppcheck
+      - name: Run cppcheck
+        run: make cppcheck
 
   clang-analyze:
     name: Static Analysis - Clang Static Analyzer
