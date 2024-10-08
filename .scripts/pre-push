@@ -4,9 +4,9 @@ set -e  # Exit immediately if any command exits with a non-zero status
 # Get the root of the git repository
 ROOT_DIR=$(git rev-parse --show-toplevel)
 
-# Run Norminette
-# echo "Running Norminette..."
-# norminette "$ROOT_DIR"
+Run Norminette
+echo "Running Norminette..."
+norminette "$ROOT_DIR"
 
 # Build the project
 echo "Building the project..."
