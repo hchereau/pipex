@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:24:23 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 15:29:47 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:50:06 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "pipex.h"
 
-# define WAIT_PIPEFD -1
+# define WAIT_PIPEFD -2
 
 typedef struct s_input_data		t_input_data;
 typedef enum e_state_function	t_state_function;

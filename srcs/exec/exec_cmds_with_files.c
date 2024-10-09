@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:03:08 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 15:36:21 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:59:58 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,4 @@ t_state_function	exec_cmds_with_files(t_input_data	*data, char **env)
 	free_data(data);
 	return (SUCCESS);
 }
+

@@ -1,128 +1,60 @@
 #include "parsing.h"
 
-static char	**get_paths(char **env)
-{
-	int		i;
-	char	**paths;
+#include "exec.h"
 
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], ENV_PATH, SIZE_ENV_PATH) == 0)
-		{
-			paths = ft_split(env[i] + SIZE_ENV_PATH, ':');
-			if (paths == NULL)
-			{
-				ft_putendl_fd("Error: malloc failed in get_path",
-					STDERR_FILENO);
-				return (NULL);
-			}
-			return (paths);
-		}
-		++i;
-	}
-	ft_putendl_fd("Error: PATH not found in env", STDERR_FILENO);
-	return (NULL);
+static void	child_process(char **cmd, int (*pipefd)[2])
+{
+	dup2((*pipefd)[1], STDOUT_FILENO);
+	close((*pipefd)[0]);
+	close((*pipefd)[1]);
+	if (cmd[0] != NULL)
+		execve(cmd[0], cmd, NULL);
+	perror("execve");
+	// free_strs(cmd);
+	return ;
+	// exit(EXIT_FAILURE);
 }
 
-static char	*make_relative_path(char *cmd, char *path)
+static void	process(char **cmd, int (*pipefd)[2], int *pid)
 {
-	char		*relative_path;
-	char		*cmd_with_path;
-
-	relative_path = ft_strjoin(path, "/");
-	if (relative_path == NULL)
-		return (NULL);
-	cmd_with_path = ft_strjoin(relative_path, cmd);
-	if (cmd_with_path == NULL)
+	pipe(*pipefd);
+	*pid = fork();
+	if (*pid == -1)
 	{
-		free(relative_path);
-		return (NULL);
+		perror("fork");
+		free_strs(cmd);
+		exit(EXIT_FAILURE);
 	}
-	free(relative_path);
-	return (cmd_with_path);
+	else if (*pid == 0)
+	{
+		child_process(cmd, pipefd);
+	}
+	else
+	{
+		dup2((*pipefd)[0], STDIN_FILENO);
+		close((*pipefd)[1]);
+		close((*pipefd)[0]);
+	}
 }
 
-static char	*get_path_from_env(char **paths, char *str)
+void	exec_commands(char *infile, char ***cmds, int *pid)
 {
-	char	*cmd;
 	size_t	i;
-	char	*malloc_str;
+	int		pipefd[2];
+	int		fd;
 
 	i = 0;
-	malloc_str = get_malloc_str(str);
-	free(str);
-	while (paths[i] != NULL && malloc_str != NULL)
+	fd = open(infile, O_RDONLY);
+	if (fd == -1)
 	{
-		cmd = make_relative_path(str, paths[i]);
-		if (cmd == NULL)
-		{
-			return (NULL);
-		}
-		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
-		{
-			free(malloc_str);
-			return (cmd);
-		}
-		free(cmd);
+		perror("open");
+		return ;
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	while (cmds[i + 1] != NULL)
+	{
+		process(cmds[i], &pipefd, pid);
 		++i;
 	}
-	return (malloc_str);
-}
-
-static char	**get_relative_path(char *str, char **env)
-{
-	char	**paths;
-	char	**cmd;
-
-	cmd = ft_split(str, ' ');
-	if (cmd == NULL)
-	{
-		ft_putendl_fd("Error: malloc failed in get_relative_path", STDERR_FILENO);
-		return (NULL);
-	}
-	paths = get_paths(env);
-	if (paths == NULL)
-		return (NULL);
-	if (access(str, F_OK) != 0 && access(str, X_OK) != 0)
-	{
-		cmd[0] = get_path_from_env(paths, cmd[0]);
-		if (cmd == NULL)
-		{
-			ft_putendl_fd("Error: malloc failed in get_relative_path",
-				STDERR_FILENO);
-			free_strs(paths);
-			return (NULL);
-		}
-	}
-	free_strs(paths);
-	return (cmd);
-}
-
-char	***get_commands(char **strs, char **env)
-{
-	char	***cmds;
-	size_t	i;
-
-	i = 0;
-	cmds = malloc(sizeof(char **) * (ft_strslen(strs) + 1));
-	if (cmds == NULL)
-	{
-		ft_putendl_fd("Error: malloc failed in get_commands", STDERR_FILENO);
-		return (NULL);
-	}
-	while (strs[i + 1] != NULL)
-	{
-		cmds[i] = get_relative_path(strs[i], env);
-		if (cmds[i] == NULL)
-		{
-			ft_putendl_fd("Error: malloc failed in get_commands",
-				STDERR_FILENO);
-			free_cmds(cmds);
-			return (NULL);
-		}
-		++i;
-	}
-	cmds[i] = NULL;
-	return (cmds);
 }
