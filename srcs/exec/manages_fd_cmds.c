@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:00:07 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 11:29:08 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:11:21 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static t_state_function	manage_fd_outfile(const char *path_outfile,
 		fd_out = open(path_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_out == -1)
 			return (ERROR);
-		dup2(fd_out, pipe_fd[1]);
-		fd_out_cmd = pipe_fd[1];
+		fd_out_cmd = fd_out;
 	}
 	else
 	{

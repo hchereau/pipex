@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:03:08 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 11:31:02 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:15:20 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ t_state_function	close_fd_in_and_out(t_cmd *cmds)
 	return (SUCCESS);
 }
 
-t_state_function	exec_cmds_with_files(t_data	*data, char **env)
+t_state_function	exec_cmds_with_files(t_input_data	*data, char **env)
 {
-	manages_fd_cmds(data->cmds);
+	if (manages_fd_cmds(data->cmds, data->infile, data->outfile) == FAILURE)
+	{
+		free_data(data);
+		return (FAILURE);
+	}
 	close_fd_in_and_out(data->cmds);
+	exec_cmds(data->cmds, env);
+	free_data(data);
 	return (SUCCESS);
 }

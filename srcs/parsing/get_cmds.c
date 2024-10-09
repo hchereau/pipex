@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:28:25 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 15:17:35 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:10:25 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	get_cmd(t_cmd *cmd, const char *str)
 	cmd->cmd = ft_split(str, ' ');
 }
 
-t_cmd	*get_cmds(const char **strs, const int strs_len)
+t_cmd	*build_cmds(const char **strs, const int strs_len)
 {
 	t_cmd	*cmds;
 	size_t	i;
