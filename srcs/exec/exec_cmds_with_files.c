@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:03:08 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 17:13:19 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:36:01 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 t_state_function	exec_cmds_with_files(t_data	*data, char **env)
 {
-	(void)data;
-	(void)env;
+
+	manages_fd_cmds(data->cmds);
+
+
+
 	return (SUCCESS);
 }
