@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 14:12:23 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 17:13:11 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:23:54 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 	}
 	else
 	{
-		data = get_files_and_cmds_from_strs(ac, av);
+		data = get_files_and_cmds_from_strs(ac, (const char **)av);
 		if (data->infile == NULL)
 		{
 			ft_putendl_fd("Error: invalid input file", STDERR_FILENO);

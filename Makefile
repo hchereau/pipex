@@ -25,9 +25,9 @@ SRCS += get_files.c
 
 PATH_SRCS += srcs/exec/
 
-# SRCS += exec_cmds_with_files.c
-# SRCS += exec_cmds.c
-# SRCS += manages_fd_cmds.c
+SRCS += exec_cmds_with_files.c
+SRCS += exec_cmds.c
+SRCS += manages_fd_cmds.c
 SRCS += get_path_cmd.c
 
 # srcs/utils/

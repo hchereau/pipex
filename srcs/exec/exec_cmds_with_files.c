@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:03:08 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 12:15:20 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:36:21 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_state_function	close_fd_in_and_out(t_cmd *cmds)
 
 	i = 0;
 	close(cmds[i].fd_in);
-	while (cmds[i + 1].cmd != NULL)
+	while (cmds[i + 1].tokens != NULL)
 	{
 		i++;
 	}

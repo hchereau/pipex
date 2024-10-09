@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 13:52:06 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:37:30 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	process_child(t_cmd *cmd, char **env)
 {
 	dup2(cmd->fd_in, STDIN_FILENO);
 	dup2(cmd->fd_in, STDOUT_FILENO);
-	cmd->cmd[0] = get_path_cmds(env, cmd->cmd[0]);
-	execve(cmd->cmd[0], cmd, env);
+	cmd->tokens[0] = get_path_cmds(env, cmd->tokens[0]);
+	execve(cmd->tokens[0], cmd->tokens, env);
 	perror("execve");
 	exit(EXIT_SUCCESS);
 }
@@ -76,7 +76,7 @@ t_state_function	exec_cmds(t_cmd *cmds, char **env)
 	t_state_function	ret;
 
 	i = 0;
-	while (cmds[i].cmd != NULL)
+	while (cmds[i].tokens != NULL)
 	{
 		ret = exec_cmd(&cmds[i], &pid, env);
 		if (ret != SUCCESS)
