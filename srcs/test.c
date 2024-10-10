@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 15:05:19 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:18:45 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,14 @@ static void	test_valid_data(t_input_data *data, int test)
 	}
 }
 
+static void	get_relative_path(t_input_data	*data, char **env)
+{
+	for (size_t i = 0; data->cmds[i].cmd != NULL; i = i + 1)
+	{
+		data->cmds[i].cmd[0] = get_path_cmds(env, data->cmds[i].cmd[0]);
+	}
+
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -163,7 +171,7 @@ int	main(int ac, char **av, char **env)
 
 	const char *av1[] = {"pipex", "test1", "cmd1", "cmd2", "test2", NULL};
 	const char *av2[] = {"pipex", "test1", "ls", "grep", "wc", "echo3", NULL};
-	const char *av3[] = {"pipex", "test1", "a", "ls -l", "sleep 3", "echo3", NULL};
+	const char *av3[] = {"pipex", "test1", "ls -l", "a", "sleep 3", "echo3", NULL};
 
 	data = get_files_and_cmds_from_strs(ft_strslen(av1 + 1), (const char **)(av1 + 1));
 	data2 = get_files_and_cmds_from_strs(ft_strslen(av2 + 1), (const char **)(av2 + 1));
@@ -171,16 +179,20 @@ int	main(int ac, char **av, char **env)
 
 	if (data != NULL)
 	{
+		get_relative_path(data, env);
 		test_valid_data(data, 1);
 		free_data(data);
 	}
 	if (data2 != NULL)
 	{
+		get_relative_path(data2, env);
+		data2->cmds->cmd[0] = get_path_cmds(env, data2->cmds[0].cmd[0]);
 		test_valid_data(data2, 2);
 		free_data(data2);
 	}
 	if (data3 != NULL)
 	{
+		get_relative_path(data3, env);
 		test_valid_data(data3, 3);
 		free_data(data3);
 	}

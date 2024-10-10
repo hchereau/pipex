@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:28:25 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 15:17:35 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:36:13 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	init_cmds(t_cmd **cmds, size_t	strs_len)
 
 static void	get_cmd(t_cmd *cmd, const char *str)
 {
-	cmd->cmd = ft_split(str, ' ');
+	cmd->tokens = ft_split(str, ' ');
 }
 
-t_cmd	*get_cmds(const char **strs, const int strs_len)
+t_cmd	*build_cmds(const char **strs, const int strs_len)
 {
 	t_cmd	*cmds;
 	size_t	i;
@@ -34,13 +34,13 @@ t_cmd	*get_cmds(const char **strs, const int strs_len)
 	while (strs[i + 1] != NULL)
 	{
 		get_cmd(&cmds[i], strs[i]);
-		if (cmds[i].cmd == NULL)
+		if (cmds[i].tokens == NULL)
 		{
 			free_cmds(cmds);
 			return (NULL);
 		}
 		++i;
 	}
-	cmds[i].cmd = NULL;
+	cmds[i].tokens = NULL;
 	return (cmds);
 }
