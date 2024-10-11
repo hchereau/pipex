@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:02 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/07 14:19:02 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:34:55 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@
 
 typedef enum e_state_function
 {
-	FAILURE = -1,
+	ERROR = -1,
+	FAILURE,
 	SUCCESS
 }	t_state_function;
 
 typedef struct s_cmd
 {
-	char	**cmd;
+	char	**tokens;
 	int		fd_in;
 	int		fd_out;
 }	t_cmd;

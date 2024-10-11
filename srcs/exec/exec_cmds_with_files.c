@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_cmds.c                                        :+:      :+:    :+:   */
+/*   exec_cmds_with_files.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 12:53:38 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 16:01:15 by hucherea         ###   ########.fr       */
+/*   Created: 2024/10/08 17:03:08 by hucherea          #+#    #+#             */
+/*   Updated: 2024/10/11 17:44:43 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "exec.h"
 
-void	free_cmds(t_cmd *cmds)
+t_state_function	exec_cmds_with_files(t_input_data	*data, char **env)
 {
-	size_t	i;
-
-	i = 0;
-	while (cmds[i].tokens != NULL)
-	{
-		free_strs(cmds[i].tokens);
-		++i;
-	}
-	free(cmds);
+	exec_cmds(data->cmds, env, data->infile, data->outfile);
+	free_data(data);
+	return (SUCCESS);
 }

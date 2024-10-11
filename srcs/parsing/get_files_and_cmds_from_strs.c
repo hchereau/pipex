@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:02:20 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/08 15:06:11 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:10:00 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_input_data	*get_files_and_cmds_from_strs(int strs_len, const char **strs)
 		free_data(data);
 		return (NULL);
 	}
-	data->cmds = get_cmds(strs + 1, strs_len - 1);
+	data->cmds = build_cmds(strs + 1, strs_len - 1);
 	if (data->cmds == NULL)
 	{
 		free_data(data);
