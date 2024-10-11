@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 17:44:52 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:58:04 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static void	child_process(t_cmd *cmd, int *pipefd, char **env)
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
+	if (cmd->tokens[0] == NULL)
+	{
+		ft_putendl_fd("Error: command is NULL", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	cmd->tokens[0] = get_path_cmds(env, cmd->tokens[0]);
 	execve(cmd->tokens[0], cmd->tokens, env);
 	perror("Error: execve failed");
