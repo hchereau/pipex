@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:05:14 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 15:18:45 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:05:03 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ void	print_data(t_input_data *data)
 	printf("infile: %s\n", data->infile);
 	printf("outfile: %s\n", data->outfile);
 	printf("cmd: \n");
-	while (data->cmds[i].cmd != NULL)
+	while (data->cmds[i].tokens != NULL)
 	{
 		printf("%zu:\n", i);
-		print_strs(data->cmds[i].cmd);
+		print_strs(data->cmds[i].tokens);
 		i++;
 	}
 }
@@ -153,9 +153,9 @@ static void	test_valid_data(t_input_data *data, int test)
 
 static void	get_relative_path(t_input_data	*data, char **env)
 {
-	for (size_t i = 0; data->cmds[i].cmd != NULL; i = i + 1)
+	for (size_t i = 0; data->cmds[i].tokens != NULL; i = i + 1)
 	{
-		data->cmds[i].cmd[0] = get_path_cmds(env, data->cmds[i].cmd[0]);
+		data->cmds[i].tokens[0] = get_path_cmds(env, data->cmds[i].tokens[0]);
 	}
 
 }
@@ -186,7 +186,7 @@ int	main(int ac, char **av, char **env)
 	if (data2 != NULL)
 	{
 		get_relative_path(data2, env);
-		data2->cmds->cmd[0] = get_path_cmds(env, data2->cmds[0].cmd[0]);
+		// data2->cmds->tokens[0] = get_path_cmds(env, data2->cmds[0].tokens[0]);
 		test_valid_data(data2, 2);
 		free_data(data2);
 	}

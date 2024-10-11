@@ -6,95 +6,76 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/09 17:58:42 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:14:14 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-// static void	wait_process(pid_t pid, size_t i)
-// {
-// 	int	status;
-
-// 	while (i > 0)
-// 	{
-// 		waitpid(pid, &status, 0);
-// 		--i;
-// 	}
-// }
-
-static void	process_child(t_cmd *cmd, char **env)
+static void	wait_child(pid_t pid, size_t i)
 {
-	printf("in process_child : cmd->fd_in = %d\n", cmd->fd_in);
-	printf("in process_child : cmd->fd_out = %d\n", cmd->fd_out);
-	printf("------------------------\n");
-	dup2(cmd->fd_in, STDIN_FILENO);
-	dup2(cmd->fd_out, STDOUT_FILENO);
-	close(cmd->fd_in);
-	close(cmd->fd_out);
-	cmd->tokens[0] = get_path_cmds(env, cmd->tokens[0]);
-	if (cmd->tokens[0] == NULL)
+	while (i > 0)
 	{
-		perror("get_path_cmds");
-		exit(EXIT_FAILURE);
+		waitpid(pid, NULL, 0);
+		--i;
 	}
+}
+
+static void	child_process(t_cmd *cmd, int *pipefd, char **env)
+{
+	// dup2(pipefd[0], STDIN_FILENO);
+	// dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	cmd->tokens[0] = get_path_cmds(env, cmd->tokens[0]);
 	execve(cmd->tokens[0], cmd->tokens, env);
-	perror("execve");
+	perror("Error: execve failed");
+	free_strs(cmd->tokens);
 	exit(EXIT_FAILURE);
 }
 
-static void	parent_process(pid_t *pid, int pipe_fd[2])
+static void	parent_process(int *pipefd)
 {
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	waitpid(*pid, NULL, 0);
+	close(pipefd[0]);
+	close(pipefd[1]);
 }
 
-static void	set_fd_cmd(int pipe_fd[2], t_cmd	*cmd)
+static void	exec_cmd(t_cmd *cmd, char **env, pid_t *pid)
 {
-	if (cmd->fd_in == WAIT_PIPEFD)
-		cmd->fd_in = pipe_fd[0];
-	if (cmd->fd_out == WAIT_PIPEFD)
-		cmd->fd_out = pipe_fd[1];
-	else
-		dup2(pipe_fd[1], cmd->fd_out);
-}
+	int	pipefd[2];
 
-t_state_function	exec_cmd(t_cmd *cmd, pid_t	*pid, char **env)
-{
-	int		pipe_fd[2];
-
-	if (pipe(pipe_fd) == -1)
-		return (ERROR);
+	if (pipe(pipefd) == -1)
+	{
+		ft_putendl_fd("Error: pipe failed", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	*pid = fork();
 	if (*pid == -1)
-		return (ERROR);
+	{
+		ft_putendl_fd("Error: fork failed", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	if (*pid == 0)
 	{
-		set_fd_cmd(pipe_fd, cmd);
-		printf("cmd->fd_in = %d\n", cmd->fd_in);
-		printf("pipe_fd[1] = %d\n", pipe_fd[0]);
-		printf("cmd->fd_out = %d\n", cmd->fd_out);
-		printf("pipe_fd[0] = %d\n", pipe_fd[1]);
-		process_child(cmd, env);
+		child_process(cmd, pipefd, env);
 	}
 	else
-	{
-		parent_process(pid, pipe_fd);
-	}
-	return (SUCCESS);
+		parent_process(pipefd);
 }
 
-t_state_function	exec_cmds(t_cmd *cmds, char **env)
+t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
+		const char *outfile)
 {
-	int					i;
-	pid_t				pid;
+	size_t	i;
+	pid_t	pid;
 
 	i = 0;
 	while (cmds[i].tokens != NULL)
 	{
-		exec_cmd(&cmds[i], &pid, env);
+		manages_fd_cmds(cmds, infile, outfile, i);
+		exec_cmd(&cmds[i], env, &pid);
 		++i;
 	}
+	wait_child(pid, i);
 	return (SUCCESS);
 }
