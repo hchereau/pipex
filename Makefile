@@ -95,7 +95,7 @@ CPPCHECK_OPTIONS =  --enable=all \
 					--inconclusive \
 					--error-exitcode=1 \
 					--suppress=missingIncludeSystem \
-					--suppress=VariableScope
+					--suppress=variableScope
 
 
 all: $(NAME)
