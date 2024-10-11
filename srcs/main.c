@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 14:12:23 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 16:17:04 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:51:59 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 			free_data(data);
 			return (FAILURE);
 		}
-		if(exec_cmds_with_files(data, env) != SUCCESS)
+		if (exec_cmds_with_files(data, env) != SUCCESS)
 			return (FAILURE);
 	}
 	return (SUCCESS);

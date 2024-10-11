@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 16:14:14 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:48:22 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static void	wait_child(pid_t pid, size_t i)
 
 static void	child_process(t_cmd *cmd, int *pipefd, char **env)
 {
-	// dup2(pipefd[0], STDIN_FILENO);
-	// dup2(pipefd[1], STDOUT_FILENO);
+	if (cmd->fd_out == WAIT_PIPEFD)
+	{
+		dup2(pipefd[1], STDOUT_FILENO);
+	}
 	close(pipefd[0]);
 	close(pipefd[1]);
 	cmd->tokens[0] = get_path_cmds(env, cmd->tokens[0]);
@@ -36,6 +38,7 @@ static void	child_process(t_cmd *cmd, int *pipefd, char **env)
 
 static void	parent_process(int *pipefd)
 {
+	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
 }

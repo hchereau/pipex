@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:24:23 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 14:26:11 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:53:42 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ typedef enum e_state_function	t_state_function;
 typedef struct s_cmd			t_cmd;
 
 t_state_function	exec_cmds_with_files(t_input_data	*data, char **env);
-// t_state_function	manages_fd_cmds(t_cmd *cmds, const char *path_infile,
-// 						const char *path_outfile);
-void				manages_fd_cmds(t_cmd	*cmds, const char *infile, const char *outfile,
-						size_t i);
+void				manages_fd_cmds(t_cmd	*cmds, const char *infile,
+						const char *outfile, size_t i);
 char				*get_path_cmds(char **env, char *cmd);
 t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
 						const char *outfile);
