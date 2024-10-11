@@ -48,7 +48,7 @@ jobs:
         run: sudo apt-get install -y cppcheck build-essential
 
       - name: Run cppcheck
-        run: make cppcheck CFLAGS+="--suppress=variableScope"
+        run: make cppcheck
 
   clang-analyze:
     name: Static Analysis - Clang Static Analyzer
@@ -78,7 +78,6 @@ jobs:
 
       - name: Install build dependencies
         run: sudo apt-get install -y build-essential
-
       - name: Build the project
         run: |
           make
