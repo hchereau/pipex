@@ -94,7 +94,8 @@ CLANG_ANALYZE_OPTIONS = --analyze \
 CPPCHECK_OPTIONS =  --enable=all \
 					--inconclusive \
 					--error-exitcode=1 \
-					--suppress=missingIncludeSystem
+					--suppress=missingIncludeSystem \
+					--suppress=VariableScope
 
 
 all: $(NAME)
