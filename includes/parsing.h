@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 13:12:16 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 16:54:01 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/12 12:11:57 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define ENV_PATH "PATH="
 # define SIZE_ENV_PATH 5
 # define INDEX_INFILE 0
+# define LEN_HERE_DOC 8
+# define FILE_TEMP_HERE_DOC ".get_here_doc"
 
 typedef struct s_input_data		t_input_data;
 typedef enum e_state_function	t_state_function;
