@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 16:18:55 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:03:57 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
 	i = 0;
 	while (cmds[i].tokens != NULL)
 	{
-		manages_fd_cmds(cmds, infile, outfile, i);
+		if (manages_fd_cmds(cmds, infile, outfile, i) == FAILURE)
+			return (FAILURE);
 		exec_cmd(&cmds[i], env, &pid);
 		++i;
 	}
