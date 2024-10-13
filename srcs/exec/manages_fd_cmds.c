@@ -72,7 +72,6 @@ t_state_function	manages_fd_cmds(t_cmd	*cmds, const char *infile,
 		if (manages_fd_infile(infile, &cmds[i].fd_in, &cmds[i].fd_out)
 			== FAILURE)
 		{
-			ft_putendl_fd("here_doc>\n", STDOUT_FILENO);
 			fd = open("/dev/null", O_RDONLY);
 			dup2(fd, STDIN_FILENO);
 			close(fd);

@@ -63,7 +63,7 @@ CC := cc
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
-CFLAGS += -g
+CFLAGS += -g3
 
 ifeq ($(debug), true)
 	CFLAGS += -g3
