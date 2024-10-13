@@ -20,6 +20,7 @@ PATH_SRCS += srcs/parsing/
 SRCS += get_files_and_cmds_from_strs.c
 SRCS += get_cmds.c
 SRCS += get_files.c
+SRCS += make_here_doc.c
 
 # srcs/exec/
 
