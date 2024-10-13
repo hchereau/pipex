@@ -6,15 +6,22 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:10:59 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/07 13:23:46 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:28:12 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static t_state_function	get_infile(char **infile, const char *str)
+static t_state_function	get_infile(char **infile, const char **strs)
 {
-	*infile = ft_strdup(str);
+	if (ft_strncmp(strs[INDEX_INFILE], "here_doc", LEN_HERE_DOC) == 0)
+	{
+		make_here_doc_file(infile, strs[INDEX_END_HERE_DOC]);
+	}
+	else
+	{
+		*infile = ft_strdup(strs[INDEX_INFILE]);
+	}
 	if (*infile == NULL)
 		return (FAILURE);
 	return (SUCCESS);
@@ -31,7 +38,7 @@ static t_state_function	get_outfile(char **outfile, const char *str)
 t_state_function	get_files(char **infile, char **outfile, const char **strs,
 	const int strs_len)
 {
-	if (get_infile(infile, strs[INDEX_INFILE]) == FAILURE)
+	if (get_infile(infile, strs) == FAILURE)
 		return (FAILURE);
 	return (get_outfile(outfile, strs[strs_len - 1]));
 }
