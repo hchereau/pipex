@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 17:03:57 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:50:19 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	parent_process(int *pipefd)
 
 static void	exec_cmd(t_cmd *cmd, char **env, pid_t *pid)
 {
-	int	pipefd[2];
+	int	pipefd[PIPEFD_SIZE];
 
 	if (pipe(pipefd) == -1)
 	{
@@ -80,9 +80,8 @@ t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
 	i = 0;
 	while (cmds[i].tokens != NULL)
 	{
-		if (manages_fd_cmds(cmds, infile, outfile, i) == FAILURE)
-			return (FAILURE);
-		exec_cmd(&cmds[i], env, &pid);
+		if (manages_fd_cmds(cmds, infile, outfile, i) != FAILURE)
+			exec_cmd(&cmds[i], env, &pid);
 		++i;
 	}
 	wait_child(pid, i);
