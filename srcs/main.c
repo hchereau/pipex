@@ -25,7 +25,7 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 	if (data == NULL)
 	{
 		ft_putendl_fd("Error: failed data malloc", STDERR_FILENO);
-		return (FAILURE);	
+		return (FAILURE);
 	}
 	if (data->infile == NULL)
 	{
