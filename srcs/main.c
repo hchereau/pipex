@@ -24,7 +24,7 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 	else
 	{
 		data = get_files_and_cmds_from_strs(ac, (const char **)av);
-		if (data->infile == NULL || data == NULL)
+		if (data->infile == NULL)
 		{
 			ft_putendl_fd("Error: invalid input file", STDERR_FILENO);
 			free_data(data);
