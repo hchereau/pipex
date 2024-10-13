@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:00:07 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 17:05:01 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:09:32 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static t_state_function	manages_fd_infile(const char *infile, int *fd_in,
 	return (FAILURE);
 }
 
-static void	manages_fd_outfile(const char *outfile, int *fd_out, int *fd_in)
+static t_state_function	manages_fd_outfile(const char *outfile, int *fd_out,
+	int *fd_in)
 {
 	if (outfile != NULL)
 	{
@@ -40,11 +41,13 @@ static void	manages_fd_outfile(const char *outfile, int *fd_out, int *fd_in)
 		if (*fd_out == -1)
 		{
 			ft_putendl_fd("Error: open failed", STDERR_FILENO);
-			exit(EXIT_FAILURE);
+			return (FAILURE);
 		}
 		dup2(*fd_out, STDOUT_FILENO);
 		close(*fd_out);
+		return (SUCCESS);
 	}
+	return (FAILURE);
 }
 
 void	manage_pipe_fds(t_cmd *cmds, size_t i)
@@ -62,7 +65,7 @@ t_state_function	manages_fd_cmds(t_cmd	*cmds, const char *infile,
 	}
 	else if (cmds[i + 1].tokens == NULL)
 	{
-		manages_fd_outfile(outfile, &cmds[i].fd_out, &cmds[i].fd_in);
+		return (manages_fd_outfile(outfile, &cmds[i].fd_out, &cmds[i].fd_in));
 	}
 	else
 	{
