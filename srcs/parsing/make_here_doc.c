@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:25:21 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 16:27:48 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:56:20 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	fill_here_doc(int fd, const char *end_here_doc)
 	char	*line;
 
 	line = get_next_line(STDIN_FILENO);
-	while (line && ft_strncmp(line, end_here_doc, ft_strlen(end_here_doc)) != 0)
+	while (line && ft_strncmp(line, end_here_doc, ft_strlen(line)) != 0)
 	{
 		write(fd, line, ft_strlen(line));
 		free(line);

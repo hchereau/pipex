@@ -6,18 +6,21 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 17:50:19 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:03:18 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	wait_child(pid_t pid, size_t i)
+static void	wait_child(pid_t *pid, size_t i)
 {
-	while (i > 0)
+	size_t	i_cmd;
+
+	i_cmd = 0;
+	while (i_cmd < i)
 	{
-		waitpid(pid, NULL, 0);
-		--i;
+		waitpid(pid[i], NULL, 0);
+		++i_cmd;
 	}
 }
 
@@ -75,15 +78,20 @@ t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
 		const char *outfile)
 {
 	size_t	i;
-	pid_t	pid;
+	pid_t	*pid;
 
 	i = 0;
+	pid = (pid_t *)malloc(sizeof(pid_t) * (ft_strslen((const char **)cmds)
+			+ 1));
+	if (pid == NULL)
+		return (FAILURE);
 	while (cmds[i].tokens != NULL)
 	{
 		if (manages_fd_cmds(cmds, infile, outfile, i) != FAILURE)
-			exec_cmd(&cmds[i], env, &pid);
+			exec_cmd(&cmds[i], env, &pid[i]);
 		++i;
 	}
 	wait_child(pid, i);
+	free(pid);
 	return (SUCCESS);
 }

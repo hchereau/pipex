@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:00:07 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 18:31:08 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:55:56 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_state_function	manages_fd_cmds(t_cmd	*cmds, const char *infile,
 		if (manages_fd_infile(infile, &cmds[i].fd_in, &cmds[i].fd_out)
 			== FAILURE)
 		{
+			ft_putendl_fd("here_doc>\n", STDIN_FILENO);
 			fd = open("/dev/null", O_RDONLY);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
