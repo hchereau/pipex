@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:42:02 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/10 15:34:55 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:00:51 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ typedef struct s_input_data
 
 void	free_data(t_input_data *data);
 void	free_cmds(t_cmd *cmds);
+size_t	ft_strlen_cmd(t_cmd *cmds);
 
 #endif

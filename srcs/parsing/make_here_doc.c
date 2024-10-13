@@ -6,11 +6,12 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:25:21 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 18:56:20 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:43:51 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include <string.h>
 
 static void	create_here_doc(int *fd)
 {
@@ -25,16 +26,18 @@ static void	create_here_doc(int *fd)
 static void	fill_here_doc(int fd, const char *end_here_doc)
 {
 	char	*line;
+	char	*str_end_here_doc;
 
+	str_end_here_doc = ft_strjoin(end_here_doc, "\n");
 	line = get_next_line(STDIN_FILENO);
-	while (line && ft_strncmp(line, end_here_doc, ft_strlen(line)) != 0)
+	while (line && strcmp(str_end_here_doc, line))
 	{
 		write(fd, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(STDIN_FILENO);
 	}
-	write(fd, line, ft_strlen(line));
 	free(line);
+	free(str_end_here_doc);
 }
 
 void	make_here_doc_file(char **infile, const char *end_here_doc)

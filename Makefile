@@ -37,6 +37,7 @@ PATH_SRCS += srcs/utils/
 
 SRCS += free_data.c
 SRCS += free_cmds.c
+SRCS += ft_strlen_cmd.c
 
 vpath %.c $(PATH_SRCS)
 
@@ -62,7 +63,7 @@ CC := cc
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
-CFLAGS += -g3
+CFLAGS += -g
 
 ifeq ($(debug), true)
 	CFLAGS += -g3

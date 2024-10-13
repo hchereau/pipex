@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 12:13:36 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 19:03:18 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:00:13 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	wait_child(pid_t *pid, size_t i)
 	i_cmd = 0;
 	while (i_cmd < i)
 	{
-		waitpid(pid[i], NULL, 0);
+		waitpid(pid[i_cmd], NULL, 0);
 		++i_cmd;
 	}
 }
@@ -81,8 +81,7 @@ t_state_function	exec_cmds(t_cmd *cmds, char **env, const char *infile,
 	pid_t	*pid;
 
 	i = 0;
-	pid = (pid_t *)malloc(sizeof(pid_t) * (ft_strslen((const char **)cmds)
-			+ 1));
+	pid = (pid_t *)malloc(sizeof(pid_t) * (ft_strlen_cmd(cmds) + 1));
 	if (pid == NULL)
 		return (FAILURE);
 	while (cmds[i].tokens != NULL)
