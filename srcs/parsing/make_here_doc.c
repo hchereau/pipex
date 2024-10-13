@@ -6,12 +6,11 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:25:21 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/13 14:15:06 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:27:48 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 
 static void	create_here_doc(int *fd)
 {

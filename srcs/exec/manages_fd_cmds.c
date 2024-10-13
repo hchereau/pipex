@@ -6,7 +6,7 @@
 /*   By: hucherea <hucherea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:00:07 by hucherea          #+#    #+#             */
-/*   Updated: 2024/10/11 16:54:16 by hucherea         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:18:33 by hucherea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	manages_fd_infile(const char *infile, int *fd_in, int *fd_out)
 	if (infile != NULL)
 	{
 		*fd_out = WAIT_PIPEFD;
+		printf("infile: %s\n", infile);
 		*fd_in = open(infile, O_RDONLY);
 		if (*fd_in == -1)
 		{
