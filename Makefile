@@ -11,7 +11,6 @@ LIBFT := $(PATH_LIBFT)libft.a
 PATH_SRCS += srcs/
 
 SRCS += main.c
-# SRCS += test.c
 
 # srcs/parsing/
 
@@ -63,7 +62,6 @@ CC := cc
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Werror
-CFLAGS += -g3
 
 ifeq ($(debug), true)
 	CFLAGS += -g3
