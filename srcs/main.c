@@ -21,19 +21,21 @@ t_state_function	resolve_pipex(int ac, char **av, char **env)
 		ft_putendl_fd("Error: not enough arguments", STDERR_FILENO);
 		return (FAILURE);
 	}
-	else
+	data = get_files_and_cmds_from_strs(ac, (const char **)av);
+	if (data == NULL)
 	{
-		data = get_files_and_cmds_from_strs(ac, (const char **)av);
-		if (data->infile == NULL)
-		{
-			ft_putendl_fd("Error: invalid input file", STDERR_FILENO);
-			free_data(data);
-			return (FAILURE);
-		}
-		if (exec_cmds_with_files(data, env) != SUCCESS)
-		{
-			return (FAILURE);
-		}
+		ft_putendl_fd("Error: failed data malloc", STDERR_FILENO);
+		return (FAILURE);
+	}
+	if (data->infile == NULL)
+	{
+		ft_putendl_fd("Error: invalid input file", STDERR_FILENO);
+		free_data(data);
+		return (FAILURE);
+	}
+	if (exec_cmds_with_files(data, env) != SUCCESS)
+	{
+		return (FAILURE);
 	}
 	return (SUCCESS);
 }

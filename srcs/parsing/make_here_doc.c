@@ -29,6 +29,7 @@ static void	fill_here_doc(int fd, const char *end_here_doc)
 	char	*str_end_here_doc;
 
 	str_end_here_doc = ft_strjoin(end_here_doc, "\n");
+	ft_putstr_fd("here_doc> ", STDOUT_FILENO);
 	line = get_next_line(STDIN_FILENO);
 	while (line && strcmp(str_end_here_doc, line))
 	{
